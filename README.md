@@ -1,32 +1,29 @@
 # Face Recognition Attendance System
 
-A **Face Recognition Attendance System** automates daily attendance logging by detecting and recognizing faces in real time. Built in Python with OpenCV and the `face_recognition` library, this project captures webcam footage, matches faces against a library of known images, and records attendance to a CSV file.
+A **Face Recognition Attendance System** automates attendance by detecting and recognizing faces in real time via webcam. Built in Python with OpenCV and the `face_recognition` library, it captures video, matches faces against a library of reference images, and logs attendance in a CSV file.
 
 ---
 
-## 🔍 Features
+## 🔍 Key Features
 
-* **Real-Time Face Detection & Recognition**: Uses OpenCV and `face_recognition` (dlib-based) to identify faces from live webcam feed.
-* **Multiple Script Organization**:
+* **Real-Time Detection & Recognition**: Leverages OpenCV and `face_recognition` for live face identification.
+* **Modular Scripts**:
 
-  * `main.py`: Core attendance loop—loads known face encodings, captures video, recognizes faces, logs attendance.
-  * `AttendanceProject.py`: Standalone demo comparing two sample images (e.g. Modi vs. test image) and drawing bounding boxes.
-* **Attendance Logging**: Appends name, timestamp, and date to `Attendance.csv`, with header auto-initialization if the file doesn’t exist.
-* **Configurable Image Library**: Place reference photos in `Images_Attendance/` named by person (e.g. `Alice.jpg`).
-* **CSV Output**: Attendance entries stored in `Attendance.csv` for easy import into Excel or database.
+  * `main.py`: Main loop—loads encodings, processes webcam feed, annotates faces, logs attendance.
+  * `AttendanceProject.py`: Demo comparing two static images with bounding-box visualization.
+* **Automated CSV Logging**: Records `Name`, `Time`, and `Date` in `Attendance.csv`, auto-creating the file and headers if missing.
+* **Configurable Image Library**: Place reference photos in `Images_Attendance/` with filenames matching person names.
 
 ---
 
 ## 📁 Project Structure
 
-```
+```plaintext
 Face_Recognition_Attendance_System/
-├── Images_Attendance/        # Reference face images (filenames → person names)
-│   ├── alice.jpg
-│   └── bob.png
-├── Attendance.csv            # Generated attendance log
+├── Images_Attendance/        # Reference images named by person (e.g., John_Doe.jpg)
+├── Attendance.csv            # Auto-generated attendance log
 ├── main.py                   # Live webcam attendance recorder
-├── AttendanceProject.py      # Demo script: compare two static images
+├── AttendanceProject.py      # Static-image comparison demo
 ├── requirements.txt          # Python dependencies
 └── README.md                 # Project documentation
 ```
@@ -38,7 +35,7 @@ Face_Recognition_Attendance_System/
 * **Python 3.7+**
 * **Webcam** connected to your system
 
-**Python Packages** (in `requirements.txt`):
+**Dependencies** (install via `requirements.txt`):
 
 ```text
 opencv-python
@@ -46,8 +43,6 @@ numpy
 face_recognition
 pandas
 ```
-
-Install them via:
 
 ```bash
 pip install -r requirements.txt
@@ -57,7 +52,7 @@ pip install -r requirements.txt
 
 ## 🚀 Installation & Usage
 
-1. **Clone the repository**:
+1. **Clone & Navigate**:
 
    ```bash
    ```
@@ -66,18 +61,15 @@ git clone [https://github.com/your-username/Face\_Recognition\_Attendance\_Syste
 cd Face\_Recognition\_Attendance\_System
 
 ````
-
-2. **Prepare your image library**:
-- Add clear, frontal face images to `Images_Attendance/`.
-- Name each file using the person’s name (e.g. `John_Doe.jpg`).
-
-3. **Initialize Attendance CSV** (optional):
-The script auto-creates `Attendance.csv` with headers if it is missing. To pre-create manually:
-```bash
+2. **Prepare Reference Images**:
+    - Add clear, frontal face images to `Images_Attendance/`.
+    - Name each file with the person’s name (e.g., `Jane_Doe.jpg`).
+3. **Initialize CSV (Optional)**:
+    ```bash
 echo "Name,Time,Date" > Attendance.csv
 ````
 
-4. **Run live attendance**:
+4. **Run Live Attendance**:
 
    ```bash
    ```
@@ -85,68 +77,67 @@ echo "Name,Time,Date" > Attendance.csv
 python main.py
 
 ````
-   - A window will open showing webcam input with recognized faces outlined.
-   - Each first-seen face per session is logged to `Attendance.csv`.
-
-5. **Run demo comparison** (static images):
-   ```bash
+    - A window will display webcam input with detected faces annotated.
+    - Logs first detection per session in `Attendance.csv`.
+5. **Run Static Demo**:
+    ```bash
 python AttendanceProject.py
 ````
 
-* Compares two hard-coded images and displays similarity score.
+```
+- Compares two hard-coded images and shows similarity metrics.
+```
 
 ---
 
-## 🎯 How It Works
+## 🎯 Workflow Overview
 
-1. **Load & Encode Known Faces** (`main.py`):
+1. **Encoding Setup**:
 
-   * Reads all images in `Images_Attendance/`.
-   * Computes face encodings via `face_recognition.face_encodings()`.
-2. **Capture Video Frames**:
+   * Load images from `Images_Attendance/`.
+   * Compute face encodings via `face_recognition.face_encodings()`.
+2. **Frame Capture**:
 
-   * Grabs frames from webcam at 25% resolution for speed.
-   * Converts to RGB for recognition.
-3. **Detect & Recognize**:
+   * Read webcam frames at reduced resolution for speed.
+   * Convert frames to RGB color space.
+3. **Detection & Matching**:
 
-   * Locates faces and computes encodings each frame.
-   * Compares against known encodings (`compare_faces` + `face_distance`).
-4. **Annotate & Log**:
+   * Locate faces and compute encodings each frame.
+   * Compare against known encodings (`compare_faces` + `face_distance`).
+4. **Annotation & Logging**:
 
-   * Draws bounding boxes and names on video feed.
-   * Marks attendance in `Attendance.csv` with timestamp and date.
-
----
-
-## ⚙️ Configuration & Tips
-
-* **Import Correction**: Ensure all scripts use `import face_recognition` (not `face_recognitions`).
-* **Error Handling**:
-
-  * Wrap `face_recognition.face_encodings(img)[0]` in try/except to skip images without detectable faces.
-* **Performance**:
-
-  * Pre-compute encodings in a separate `train.py` and serialize to `.npy` for faster startup.
-  * Adjust frame resize factor or skip frames for smoother display.
+   * Draw bounding boxes and names.
+   * Append attendance records to `Attendance.csv` with timestamp and date.
 
 ---
 
-## 🛣 Future Improvements
+## ⚙️ Configuration & Best Practices
 
-* Add a **web-based dashboard** (Streamlit or Flask) for attendance review.
-* Integrate with a **SQL/NoSQL database** in place of CSV.
-* Implement **anti-spoofing** checks (liveness detection).
-* Add **email alerts** for absent students.
-* Build a **GUI** for on-the-fly addition/removal of student faces.
+* **Import Fix**: Ensure `import face_recognition` (no typo).
+* **Handle Missing Faces**: Wrap encoding calls in `try/except` to skip images without detectable faces.
+* **Performance Tips**:
+
+  * Pre-compute and serialize encodings (e.g., `.npy`) for faster startup.
+  * Resize frames or skip frames to improve real-time performance.
+
+---
+
+## 🛣 Future Enhancements
+
+* Web-based dashboard (Streamlit/Flask) for attendance review.
+* Database integration (SQL/NoSQL) instead of CSV.
+* Liveness detection for anti-spoofing.
+* Email notifications for absentees.
+* GUI for dynamic face library management.
 
 ---
 
 ## 📄 License
 
-This project is open source under the [MIT License](LICENSE).
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests to propose enhancements or fixes.
+Contributions are welcome! Open issues or submit pull requests for improvements.
