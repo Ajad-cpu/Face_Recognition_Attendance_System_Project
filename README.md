@@ -142,4 +142,4 @@ Contributions are welcome! Feel free to open issues or submit pull requests to i
 
 ## 📬 Contact
 
-For questions or feedback, open an issue or reach out at **[your.email@example.com](azadsinghdinkar@gmail.com)** (replace with your contact).
+For questions or feedback, open an issue or reach out at **(azadsinghdinkar@gmail.com)** (replace with your contact).
