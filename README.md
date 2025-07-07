@@ -139,7 +139,3 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for d
 Contributions are welcome! Feel free to open issues or submit pull requests to improve features, documentation, or performance.
 
 ---
-
-## 📬 Contact
-
-For questions or feedback, open an issue or reach out at **(azadsinghdinkar@gmail.com)** (replace with your contact).
